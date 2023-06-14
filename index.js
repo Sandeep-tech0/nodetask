@@ -30,55 +30,51 @@ app.post("/file-upload", upload.single("excel"), async (req, res) => {
 
       if (sheetName === 'Sheet1') {
         const clients = sheetData.map((row) => {
-          return [
-            row.id,
-            row.name,
-            row.email,
-          ];
+          const data = {id: row.id,
+            name: row.name,
+            email:row.email}
+            const insertQuery = "INSERT INTO client SET ?";
+            connection.query(insertQuery, data, (error, result) => {
+              if (error) {
+                console.error('Error inserting data into client table:', error);
+              } else {
+                console.log('Data inserted into client table');
+              }
+            });
         });
 
-        const insertQuery = "INSERT INTO client (id, name, email) VALUES ?";
-        connection.query(insertQuery, [clients], (error, result) => {
-          if (error) {
-            console.error('Error inserting data into client table:', error);
-          } else {
-            console.log('Data inserted into client table');
-          }
-        });
+        
       } else if (sheetName === 'Sheet2') {
         const clientBankDetails = sheetData.map((row) => {
-          return [
-            row.id,
-            row.clientId,
-            row.accountNumber,
-          ];
+          const data = {id: row.id,
+            clientId: row.clientId,
+            accountNumber:row.accountNumber}
+            const insertQuery = "INSERT INTO client_bank_details  SET ?";
+            connection.query(insertQuery, data, (error, result) => {
+              if (error) {
+                console.error('Error inserting data into client_bank_details table:', error);
+              } else {
+                console.log('Data inserted into client_bank_details table');
+              }
+            });
+            
         });
 
-        const insertQuery = "INSERT INTO client_bank_details (id, clientId, accountNumber) VALUES ?";
-        connection.query(insertQuery, [clientBankDetails], (error, result) => {
-          if (error) {
-            console.error('Error inserting data into client_bank_details table:', error);
-          } else {
-            console.log('Data inserted into client_bank_details table');
-          }
-        });
-        
+     
       } else if (sheetName === 'Sheet3') {
         const clientAddresses = sheetData.map((row) => {
-          return [
-            row.id,
-            row.clientId,
-            row.address,
-          ];
-        });
-
-        const insertQuery = "INSERT INTO client_address (id, clientId, address) VALUES ?";
-        connection.query(insertQuery, [clientAddresses], (error, result) => {
-          if (error) {
-            console.error('Error inserting data into client_address table:', error);
-          } else {
-            console.log('Data inserted into client_address table');
-          }
+          const data = {id: row.id,
+            clientId: row.clientId,
+            address:row.address}
+            
+            const insertQuery = "INSERT INTO client_bank_details  SET ?";
+            connection.query(insertQuery, data, (error, result) => {
+              if (error) {
+                console.error('Error inserting data into client_bank_details table:', error);
+              } else {
+                console.log('Data inserted into client_bank_details table');
+              }
+            });
         });
       }
     }
