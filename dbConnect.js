@@ -18,9 +18,5 @@ connection.connect((err) => {
   console.log('Connected to the database');
 });
 
-// Function to get a database connection
-function getConnection() {
-  return connection;
-}
 
-module.exports = { getConnection };
+module.exports = { connection };
